@@ -1,6 +1,9 @@
 {
-  "dependencies": {
-    "express": "^4.18.2",
-    "nodemon": "^3.1.11"
-  }
+    "name": "among-us-irl-prototype",
+    "type": "module",
+    "dependencies": {
+        "express": "^4.18.2",
+        "nodemon": "^3.1.11",
+        "socket.io": "^4.8.3"
+    }
 }

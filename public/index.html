@@ -1,10 +1,16 @@
+<!DOCTYPE html>
 <html>
-  <head>
-  </head>
-  <body>
-    <script src="./js/index.js"></script>
-    <h1>Prototype</h1>
-    <input type="text" name="Message" id="messageInput">
-    <button onclick="sendMessage()">Send Message</button>
-  </body>
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Among Us IRL</title>
+</head>
+<body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="messages.js"></script>
+  <input id="input" /><button onclick="sendMessage()">Send</button>
+  <h2>Messages</h2>
+  <div id="messages"></div>
+</body>
+
 </html>
