@@ -24,16 +24,32 @@
 		<script>
 			function updateColorMode() {
 				const element = document.getElementById("html");
-				element.setAttribute("data-bs-theme", cookieStore.get("theme"));
+				element.setAttribute("data-bs-theme", localStorage.getItem("theme"));
+				updateColorModeSwitch();
+			}
+			function updateColorModeSwitch() {
+				const element = document.getElementById("colormodeSwitch");
+				const theme = localStorage.getItem("theme");
+				switch (theme) {
+					case "light":
+						element.innerHTML = "<i class='bi bi-sun'> </i>";
+						break;
+					case "dark":
+						element.innerHTML = "<i class='bi bi-moon'> </i>";
+						break;
+					default:
+						element.innerHTML = "<i class='bi bi-sun'> </i>";
+						break;
+				}
 			}
 
 			updateColorMode();
 
 			async function setColorMode(mode) {
 				if (mode == 0) {
-					await cookieStore.set("theme", "light");
+					await localStorage.setItem("theme", "light");
 				} else if (mode == 1) {
-					await cookieStore.set("theme", "dark");
+					await localStorage.setItem("theme", "dark");
 				}
 				updateColorMode();
 			}
@@ -41,14 +57,9 @@
 		<main>
 			<div class="container">
 				<div class="px-4 py-5 my-5 text-center">
-					<img
-						class="d-block mx-auto mb-4"
-						src=""
-						alt=""
-						width="72"
-						height="57"
-					/>
-					<h1 class="display-5 fw-bold text-body-emphasis">Among Us IRL</h1>
+					<h1 class="display-5 fw-bold text-body-emphasis mb-5">
+						Among Us IRL
+					</h1>
 					<div class="col-lg-6 mx-auto">
 						<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 							<a class="btn btn-primary btn-lg px-4 gap-3" href="#"
@@ -57,34 +68,33 @@
 							<a class="btn btn-outline-secondary btn-lg px-4" href="host.html"
 								>Host Game</a
 							>
-						</div>
-					</div>
-					<br />
-					<div class="col-lg-6 mx-auto">
-						<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 							<div class="dropdown">
 								<button
 									class="btn btn-lg btn-primary dropdown-toggle"
 									type="button"
 									data-bs-toggle="dropdown"
 									aria-expanded="false"
+									id="colormodeSwitch"
 								>
-									Color Mode
+									<i class="bi bi-sun"></i>
 								</button>
 								<ul class="dropdown-menu">
 									<li>
 										<button class="dropdown-item" onclick="setColorMode(0)">
-											<i class="bi bi-sun"></i> Light
+											<i class="bi bi-sun"> Light</i>
 										</button>
 									</li>
 									<li>
 										<button class="dropdown-item" onclick="setColorMode(1)">
-											<i class="bi bi-moon"></i> Dark
+											<i class="bi bi-moon"> Dark</i>
 										</button>
 									</li>
 								</ul>
 							</div>
 						</div>
+					</div>
+					<br />
+					<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 					</div>
 				</div>
 			</div>
