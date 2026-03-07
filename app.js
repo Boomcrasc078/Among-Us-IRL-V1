@@ -19,32 +19,7 @@ app.get("/", (req, res) => {
 
 let lobbys = [];
 
-io.on("connection", (socket) => {
-	console.log(`Socket ${socket.id} has been connected`);
-	socket.on("disconnect", (reason) => {
-		console.log(`Socket ${socket.id} has been disconnected: ${reason}`);
-    if (reason === "transport close") {
-      closeLobbysHosted(socket);
-		}
-	});
-
-	socket.on("host-lobby", (callback) => {
-		let newLobby = new Lobby(socket);
-		lobbys.push(newLobby);
-		console.log(`Socket ${socket.id} has hosted a new lobby`);
-		callback({ status: true, lobbyName: newLobby.name });
-	});
-
-	socket.on("join-lobby", (lobbyName, callback) => {
-		const lobby = lobbys.find((lobby) => lobby.name === lobbyName);
-		if (lobby) {
-			callback({ status: true, lobbyName: lobby.name });
-		} else {
-			callback({ status: false, message: "Lobby not found" });
-		}
-		lobby
-	});
-});
+io.on("connection", (socket) => onConnection(socket));
 
 function update() {}
 
@@ -54,12 +29,76 @@ server.listen(3000, () => {
 	console.log("server running at http://localhost:3000");
 });
 
-// function closeLobbysHosted(socket) {
-//   let closeLobbys = lobbys.filter((lobby) => lobby.host === socket);
-//   closeLobbys.forEach((lobby) => { 
-    
-//     });
-//     lobbys = lobbys.filter((l) => l !== lobby);
-//   });
-//   console.log(`Socket ${socket.id} has been removed from lobbies`);
-// }
+function onConnection(socket) {
+	console.log(`Socket ${socket.id} has been connected`);
+
+	socket.on("disconnect", (reason) => onDisconnection(socket, reason));
+
+	socket.on("host-lobby", (callback) => onHostLobby(socket, callback));
+
+	socket.on("join-lobby", (lobbyName, playerName, callback) =>
+		onJoinLobby(socket, lobbyName, playerName, callback)
+	);
+}
+
+function onDisconnection(socket, reason) {
+	closeLobbysHostedBy(socket);
+	console.log(`Socket ${socket.id} has been disconnected: ${reason}`);
+}
+
+function onHostLobby(socket, callback) {
+	let newLobby = new Lobby(socket);
+	lobbys.push(newLobby);
+	socket.join(newLobby.name);
+	const callbackData = {
+		status: true,
+		lobbyName: newLobby.name
+	};
+	callback(callbackData);
+	console.log(`Socket ${socket.id} has hosted a new lobby`);
+}
+
+function onJoinLobby(socket, lobbyName, playerName, callback) {
+	const lobby = lobbys.find((lobby) => lobby.name === lobbyName);
+
+	if (!lobby) {
+		callback({ status: false, message: "Lobby not found" });
+		return;
+	}
+
+	const player = {
+		socket: socket,
+		name: playerName
+	};
+	lobby.players.push(player);
+
+	socket.join(lobbyName);
+	callback({ status: true, lobbyName: lobby.name });
+	console.log(`Socket ${socket.id} has joined lobby ${lobbyName}`);
+}
+
+function closeLobbysHostedBy(socket) {
+	let closeLobbys = lobbys.filter((lobby) => lobby.host === socket);
+	for (let lobby of closeLobbys) {
+		io.socketsLeave(lobby.name);
+		console.log(
+			`Lobby ${lobby.name} has been closed because the host has disconnected`
+		);
+	}
+}
+
+setInterval(updateAllLobbys, 1000);
+
+function updateAllLobbys() {
+	for (let lobby of lobbys) {
+		updateLobby(lobby);
+	}
+}
+
+function updateLobby(lobby) {
+	let emission = {
+		players: lobby.players.map((player) => player.name)
+	};
+
+	io.to(lobby.name).emit("update-lobby", emission);
+}

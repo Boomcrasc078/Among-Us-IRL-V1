@@ -38,16 +38,28 @@
 								class="form-control"
 								id="nameInput"
 								placeholder="Namn"
+								onkeyup="localStorage.setItem('player-name', this.value)"
 							/>
 							<label for="nameInput">Namn</label>
 						</div>
 						<div class="form-floating mb-3">
 							<input
 								type="text"
+								onkeyup="
+									var start = this.selectionStart;
+									var end = this.selectionEnd;
+									this.value = this.value.toUpperCase();
+									this.setSelectionRange(start, end);
+								"
 								class="form-control"
 								id="lobbyCodeInput"
 								placeholder="Rumskod"
 							/>
+							<script>
+								document.addEventListener("DOMContentLoaded", function () {
+									document.getElementById("nameInput").value = localStorage.getItem("player-name");
+								});
+							</script>
 							<label for="lobbyCodeInput">Rumskod</label>
 						</div>
 						<p>
@@ -108,12 +120,14 @@
 					</div>
 				</div>
 			</div>
-			<div id="error" style="display: none;">
+			<div id="error" style="display: none">
 				<div id="errorContainer" class="container">
 					<div
 						class="d-flex flex-column gap-5 position-absolute top-50 start-50 translate-middle"
 					>
-						<h1 id="error-text" class="display-1 text-center">Ett fel uppstod</h1>
+						<h1 id="error-text" class="display-1 text-center">
+							Ett fel uppstod
+						</h1>
 						<button
 							class="btn btn-primary btn-lg rounded rounded-pill"
 							onclick="location.reload()"
@@ -123,9 +137,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="lobby" style="display: none">
-				
-			</div>
+			<div id="lobby" style="display: none"></div>
 		</main>
 	</body>
 </html>

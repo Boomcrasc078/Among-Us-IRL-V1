@@ -6,6 +6,7 @@ class Lobby {
 			this.name += String.fromCharCode(Math.floor(Math.random() * 26) + 65);
 		}
 		this.name;
+		this.players = [];
 	}
 }
 
