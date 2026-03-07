@@ -1,8 +1,9 @@
 const socket = io();
-let localLobby = {
+
+let localHostedLobby = {
 	name: null,
 	players: []
-}
+};
 
 tryHostLobby();
 
@@ -11,17 +12,40 @@ function tryHostLobby() {
 		if (err) {
 			console.log(`Error hosting lobby: ${err}`);
 		} else {
+			hostLobby(response);
 		}
 	});
 }
 
-function hostLobby() {
-	localLobby.name = response.lobbyName;
-	document.getElementById("lobbyCode").innerHTML = hostedLobby;
-	console.log(`Lobby hosted successfully: ${hostedLobby}`);
-	socket.on("update-lobby", (data) => updateLobby(data));
+function hostLobby(response) {
+	localHostedLobby.name = response.lobbyName;
+	document.getElementById("lobbyCode").innerHTML = localHostedLobby.name;
+	console.log(`Lobby hosted successfully: ${localHostedLobby.name}`);
+	updateLobby();
+	startUpdatePlayersTable();
 }
 
-function updateLobby(data) {
-	localLobby.players = data.players;
+function updateLobby() {
+	socket.on("update-players", (players) => {
+		localHostedLobby.players = players;
+	});
+}
+
+function startUpdatePlayersTable() {
+	const tableElement = document.getElementById("playersTableBody");
+
+	setInterval(updateTable, 1000);
+
+	function updateTable() {
+		let table = "";
+		let i = 1;
+		for (let player in localHostedLobby.players) {
+			table += `<tr>
+			<td scope="col">${i}</td>
+			<td scope="col">${player.name}</td>
+			</tr>`;
+			i++;
+		}
+		tableElement.innerHTML = table;
+	}
 }

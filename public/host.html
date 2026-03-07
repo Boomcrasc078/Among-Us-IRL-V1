@@ -61,19 +61,7 @@
 </html>
 
 <script>
-	const tableElement = document.getElementById("playersTableBody");
-	setInterval(updateTable, 1000);
-	function updateTable() {
-		let table = "";
-		let i = 0;
-		for (let player in localLobby.players) {
-			table += `<tr>
-			<td scope="col">${i}</td>
-			<td scope="col">${player.name}</td>
-			</tr>`;
-		}
-		tableElement.innerHTML = table;
-	}
+
 </script>
 
 <script src="host.js"></script>

@@ -36,8 +36,8 @@ function onConnection(socket) {
 
 	socket.on("host-lobby", (callback) => onHostLobby(socket, callback));
 
-	socket.on("join-lobby", (lobbyName, playerName, callback) =>
-		onJoinLobby(socket, lobbyName, playerName, callback)
+	socket.on("join-lobby", (lobbyName, player, callback) =>
+		onJoinLobby(socket, lobbyName, player, callback)
 	);
 }
 
@@ -58,7 +58,7 @@ function onHostLobby(socket, callback) {
 	console.log(`Socket ${socket.id} has hosted a new lobby`);
 }
 
-function onJoinLobby(socket, lobbyName, playerName, callback) {
+function onJoinLobby(socket, lobbyName, player, callback) {
 	const lobby = lobbys.find((lobby) => lobby.name === lobbyName);
 
 	if (!lobby) {
@@ -66,10 +66,6 @@ function onJoinLobby(socket, lobbyName, playerName, callback) {
 		return;
 	}
 
-	const player = {
-		socket: socket,
-		name: playerName
-	};
 	lobby.players.push(player);
 
 	socket.join(lobbyName);
@@ -96,9 +92,10 @@ function updateAllLobbys() {
 }
 
 function updateLobby(lobby) {
-	let emission = {
-		players: lobby.players.map((player) => player.name)
-	};
 
-	io.to(lobby.name).emit("update-lobby", emission);
+	function updatePlayers() {
+		io.to(lobby.name).emit("update-players", lobby.players);
+	}
+
+	updatePlayers();
 }

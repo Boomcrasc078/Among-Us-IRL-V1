@@ -57,7 +57,8 @@
 							/>
 							<script>
 								document.addEventListener("DOMContentLoaded", function () {
-									document.getElementById("nameInput").value = localStorage.getItem("player-name");
+									document.getElementById("nameInput").value =
+										localStorage.getItem("player-name");
 								});
 							</script>
 							<label for="lobbyCodeInput">Rumskod</label>
@@ -169,4 +170,4 @@
 	}
 </script>
 
-<script src="join.js"></script>
+<script type="module" src="join.js"></script>
