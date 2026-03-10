@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+@font-face {
+	font-family: VCR_OSD_MONO;
+	src: url(../Fonts/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf);
+}
+
+body {
+	font-family: 'VCR_OSD_MONO' !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.amatic {
+	font-family: 'Amatic SC', sans-serif;
+	font-style: normal;
+}
+
+h1,
+.h1 {
+	font-size: min(6rem, 15vw);
+	font-weight: 700 !important;
+}
+h2,
+.h2 {
+	font-size: min(4rem, 10vw) !important;
+	font-weight: 700 !important;
+}
+h3,
+.h3 {
+	font-size: min(3rem, 8vw) !important;
+	font-weight: 700 !important;
+}
+h4,
+.h4 {
+	font-size: min(2rem, 5vw) !important;
+	font-weight: 700 !important;
+}
+h5,
+.h5 {
+	font-size: min(1.5rem, 3vw) !important;
+	font-weight: 700 !important;
+}
+h6,
+.h6 {
+	font-size: min(1rem, 2vw) !important;
+	font-weight: 700 !important;
+}

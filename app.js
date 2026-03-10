@@ -34,10 +34,10 @@ server.listen(port, () => {
 function onConnection(socket) {
 	if (socket.recovered) {
 		console.log(`Socket ${socket.id} has been reconnected`);
-		return;
-	}
 
-	console.log(`Socket ${socket.id} has been connected`);
+	} else {
+		console.log(`Socket ${socket.id} has been connected`);
+	}
 
 	socket.on('disconnect', (reason) => onDisconnection(socket, reason));
 
@@ -66,7 +66,7 @@ function onJoinLobby(socket, lobbyName, player, callback) {
 	const lobby = lobbys.find((lobby) => lobby.name === lobbyName);
 
 	if (!lobby) {
-		callback({ status: false, message: 'Lobby not found' });
+		callback({ status: false, message: `Kunde inte hitta ett rum med koden: ${lobbyName}` });
 		return;
 	}
 

@@ -13,23 +13,19 @@
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
 		/>
+		<link rel="stylesheet" href="CSS/fonts.css" />
+		<link rel="stylesheet" href="CSS/background.css" />
 	</head>
 	<body>
-
+		<div class="background-image"></div>
 		<main>
 			<div class="container">
 				<div class="px-4 py-5 my-5 text-center">
-					<h1 class="display-5 fw-bold text-body-emphasis mb-5">
-						Among Us IRL
-					</h1>
+					<h1 class="display-5 fw-bold text-body-emphasis mb-5">Among Us IRL</h1>
 					<div class="col-lg-6 mx-auto">
 						<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-							<a class="btn btn-primary btn-lg px-4 gap-3" href="player.html"
-								>Join Game</a
-							>
-							<a class="btn btn-outline-secondary btn-lg px-4" href="host.html"
-								>Host Game</a
-							>
+							<a class="btn btn-primary btn-lg px-4 gap-3" href="player.html">Join Game</a>
+							<a class="btn btn-outline-secondary btn-lg px-4" href="host.html">Host Game</a>
 							<div class="dropdown">
 								<button
 									class="btn btn-lg btn-primary dropdown-toggle"
@@ -63,41 +59,41 @@
 	</body>
 </html>
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-			crossorigin="anonymous"
-		></script>
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="Components/theme.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+	crossorigin="anonymous"
+></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="Components/theme.js"></script>
 
-		<script>
-			function updateColorModeSwitch() {
-				const element = document.getElementById("colormodeSwitch");
-				const theme = localStorage.getItem("theme");
-				switch (theme) {
-					case "light":
-						element.innerHTML = "<i class='bi bi-sun'> </i>";
-						break;
-					case "dark":
-						element.innerHTML = "<i class='bi bi-moon'> </i>";
-						break;
-					default:
-						element.innerHTML = "<i class='bi bi-sun'> </i>";
-						break;
-				}
-			}
+<script>
+	function updateColorModeSwitch() {
+		const element = document.getElementById('colormodeSwitch');
+		const theme = localStorage.getItem('theme');
+		switch (theme) {
+			case 'light':
+				element.innerHTML = "<i class='bi bi-sun'> </i>";
+				break;
+			case 'dark':
+				element.innerHTML = "<i class='bi bi-moon'> </i>";
+				break;
+			default:
+				element.innerHTML = "<i class='bi bi-sun'> </i>";
+				break;
+		}
+	}
 
-			updateColorMode();
-			updateColorModeSwitch();
+	updateColorMode();
+	updateColorModeSwitch();
 
-			async function setColorMode(mode) {
-				if (mode == 0) {
-					await localStorage.setItem("theme", "light");
-				} else if (mode == 1) {
-					await localStorage.setItem("theme", "dark");
-				}
-				updateColorMode();
-				updateColorModeSwitch();
-			}
-		</script>
+	async function setColorMode(mode) {
+		if (mode == 0) {
+			await localStorage.setItem('theme', 'light');
+		} else if (mode == 1) {
+			await localStorage.setItem('theme', 'dark');
+		}
+		updateColorMode();
+		updateColorModeSwitch();
+	}
+</script>

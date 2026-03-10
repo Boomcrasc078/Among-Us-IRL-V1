@@ -4,14 +4,13 @@ socket.on('disconnect', (reason) => onDisconnection(reason));
 
 let localPlayer = { name: null, id: null };
 
-let localJoinedLobby = { name: null };
+let localJoinedLobby = { name: null, players: [] };
 
 joinLobbyMenu(true);
 
 function joinLobbyMenu(enabled) {
 	const joinLobbyMenuElement = document.getElementById('joinLobbyMenu');
 	if (enabled) {
-		console.log('sdfgds');
 		joinLobbyMenuElement.style.display = 'block';
 		setInterval(updateJoinButtonEnabled, 100);
 	} else {
@@ -59,6 +58,9 @@ function joinLobby() {
 			error(true, err);
 		} else if (response.status) {
 			console.log(`Joined lobby successfully: ${response.lobbyName}`);
+			localStorage.setItem('last-joined-lobby', localJoinedLobby.name)
+			lobby(true);
+			inLobby();
 		} else {
 			console.log(`Failed to join lobby: ${response.message}`);
 			error(true, response.message);
@@ -83,4 +85,8 @@ function lobby(enabled) {
 	} else {
 		lobbyElement.style.display = 'none';
 	}
+}
+
+function inLobby() {
+	//socket.on('update-players')
 }

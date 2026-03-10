@@ -42,8 +42,8 @@ function updateTable() {
 	let i = 1;
 	for (const player of localHostedLobby.players) {
 		table += `<tr>
-			<td scope="col">${i}</td>
-			<td scope="col">${player.name}</td>
+			<td class="bg-body-glass" scope="col">${i}</td>
+			<td class="bg-body-glass" scope="col">${player.name}</td>
 			</tr>`;
 		i++;
 	}
