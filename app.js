@@ -34,7 +34,6 @@ server.listen(port, () => {
 function onConnection(socket) {
 	if (socket.recovered) {
 		console.log(`Socket ${socket.id} has been reconnected`);
-
 	} else {
 		console.log(`Socket ${socket.id} has been connected`);
 	}
@@ -54,7 +53,7 @@ function onDisconnection(socket, reason) {
 }
 
 function onHostLobby(socket, callback) {
-	let newLobby = new Lobby(socket);
+	let newLobby = new Lobby(io, socket, lobbys);
 	lobbys.push(newLobby);
 	socket.join(newLobby.name);
 	const callbackData = { status: true, lobbyName: newLobby.name };
@@ -91,14 +90,6 @@ setInterval(updateAllLobbys, updateInterval);
 
 function updateAllLobbys() {
 	for (let lobby of lobbys) {
-		updateLobby(lobby);
+		lobby.update();
 	}
-}
-
-function updateLobby(lobby) {
-	function updatePlayers() {
-		io.to(lobby.name).emit('update-players', lobby.players);
-	}
-
-	updatePlayers();
 }

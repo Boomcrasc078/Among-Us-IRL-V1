@@ -6,10 +6,6 @@ socket.on('disconnect', (reason) => onDisconnection(reason));
 
 let localHostedLobby = { name: null, players: [] };
 
-function onDisconnection(reason) {
-	console.log(`You have been disconnected: ${reason}`);
-}
-
 tryHostLobby();
 function tryHostLobby() {
 	loadingScreen(true, 'Skapar spel...');

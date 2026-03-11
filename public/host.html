@@ -35,7 +35,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="lobby" style="display: none">
+			<div id="lobby" class="menu" style="display: none">
 				<div class="container">
 					<div class="d-flex flex-column">
 						<div class="text-center flex-column gap-5">
@@ -47,9 +47,9 @@
 								<h3>Anslut på</h3>
 								<h1 id="joinURL">tinyurl.se/amongusirl</h1>
 								<style>
-									@media (max-width: 770px) {
+									@media (max-width: 767.98px) {
 										#joinURL {
-											font-size: min(5rem, 13vw);
+											font-size: min(4.5rem, 13vw);
 										}
 									}
 								</style>
@@ -57,40 +57,47 @@
 								<h1 id="lobbyCode"></h1>
 							</div>
 						</div>
-						<div class="mt-5">
-							<div class="d-flex gap-5 align-items-center">
-								<h3 class="amatic">Väntar på spelare</h3>
-								<div class="spinner-border" style="border-width: 0.3rem" role="status">
-									<span class="visually-hidden">Loading...</span>
-								</div>
-							</div>
-							<table id="playersTable" class="table table-borderless bg-body-glass">
-								<thead>
-									<tr class="border-1 border-white border-top-0 border-start-0 border-end-0">
-										<th class="bg-transparent" scope="col">#</th>
-										<th class="bg-transparent" scope="col">Namn</th>
-									</tr>
-								</thead>
-								<tbody id="playersTableBody"></tbody>
-							</table>
-						</div>
-						<div class="mt-5">
-							<h3>Spelinställningar</h3>
-							<div class="bg-body-glass p-3 rounded rounded-5">
-								<div class="row">
-									<div class="col">
-										<lavel for="impostor-count-input" class="form-label">Impostors</lavel>
-										<select id="impostor-count-input" class="form-select bg-body-glass" aria-label="Default select example">
-											<option class="bg-black" value="1">1</option>
-											<option class="bg-black" value="2">2</option>
-											<option class="bg-black" value="3">3</option>
-										</select>
+						<div class="row mt-5">
+							<div class="col">
+								<div class="d-flex gap-5 align-items-center">
+									<h3 class="amatic">Väntar på spelare</h3>
+									<div class="spinner-border" style="border-width: 0.3rem" role="status">
+										<span class="visually-hidden">Loading...</span>
 									</div>
-									<div class="col"></div>
+								</div>
+								<table id="playersTable" class="table table-borderless bg-body-glass rounded">
+									<thead>
+										<tr class="border-1 border-white border-top-0 border-start-0 border-end-0">
+											<th class="bg-transparent" scope="col">#</th>
+											<th class="bg-transparent" scope="col">Namn</th>
+										</tr>
+									</thead>
+									<tbody id="playersTableBody"></tbody>
+								</table>
+							</div>
+							<div class="col">
+								<h3>Spelinställningar</h3>
+								<div class="bg-body-glass p-4 rounded">
+									<div class="row">
+										<div class="col">
+											<lavel for="impostor-count-input" class="form-label">Impostors</lavel>
+											<select
+												id="impostor-count-input"
+												class="form-select bg-body-glass"
+												aria-label="Default select example"
+											>
+												<option class="bg-black" value="1">1</option>
+												<option class="bg-black" value="2">2</option>
+												<option class="bg-black" value="3">3</option>
+											</select>
+										</div>
+										<div class="col"></div>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="mt-5 d-flex flex-column">
+
+						<div class="mt-5 mb-5 d-flex flex-column">
 							<button class="btn btn-primary btn-lg rounded rounded-pill" id="startGameBtn">
 								STARTA SPELET
 							</button>
