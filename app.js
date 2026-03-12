@@ -53,10 +53,11 @@ function onDisconnection(socket, reason) {
 }
 
 function onHostLobby(socket, callback) {
-	let newLobby = new Lobby(io, socket, lobbys);
-	lobbys.push(newLobby);
-	socket.join(newLobby.name);
-	const callbackData = { status: true, lobbyName: newLobby.name };
+	let createdLobby = new Lobby(socket, lobbys);
+	lobbys.push(createdLobby);
+	socket.join(createdLobby.name);
+	const callbackData = { status: true, lobbyName: createdLobby.name };
+	getLobbyUpdates(socket, createdLobby);
 	callback(callbackData);
 	// console.log(`Socket ${socket.id} has hosted a new lobby`);
 }
@@ -69,8 +70,8 @@ function onJoinLobby(socket, lobbyName, player, callback) {
 		return;
 	}
 
-	lobby.players.push(player);
-
+	socket.data.name = player.name;
+	
 	socket.join(lobbyName);
 	callback({ status: true, lobbyName: lobby.name });
 	// console.log(`Socket ${socket.id} has joined lobby ${lobbyName}`);
@@ -90,6 +91,12 @@ setInterval(updateAllLobbys, updateInterval);
 
 function updateAllLobbys() {
 	for (let lobby of lobbys) {
-		lobby.update();
+		lobby.update(io);
 	}
+}
+
+function getLobbyUpdates(socket, createdLobby) {
+	socket.on('update-lobby-settings', (settings) => {
+		createdLobby.settings = settings;
+	});
 }

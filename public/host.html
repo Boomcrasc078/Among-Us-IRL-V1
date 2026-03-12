@@ -80,16 +80,28 @@
 								<div class="bg-body-glass p-4 rounded">
 									<div class="row">
 										<div class="col">
-											<lavel for="impostor-count-input" class="form-label">Impostors</lavel>
+											<label for="impostor-count-input" class="form-label">Impostors</label>
 											<select
 												id="impostor-count-input"
 												class="form-select bg-body-glass"
 												aria-label="Default select example"
+												onchange="
+													let settings = JSON.parse(localStorage.getItem('settings'));
+													settings.impostorCount = this.value;
+													localStorage.setItem('settings', JSON.stringify(settings));
+												"
 											>
 												<option class="bg-black" value="1">1</option>
 												<option class="bg-black" value="2">2</option>
 												<option class="bg-black" value="3">3</option>
 											</select>
+											<script>
+												const impostorCountInputElement =
+													document.getElementById('impostor-count-input');
+												impostorCountInputElement.value = JSON.parse(
+													localStorage.getItem('settings')
+												).impostorCount;
+											</script>
 										</div>
 										<div class="col"></div>
 									</div>

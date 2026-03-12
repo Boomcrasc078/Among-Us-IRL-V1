@@ -7,6 +7,9 @@ socket.on('disconnect', (reason) => onDisconnection(reason));
 let localHostedLobby = { name: null, players: [] };
 
 tryHostLobby();
+
+const sendInterval = 200;
+
 function tryHostLobby() {
 	loadingScreen(true, 'Skapar spel...');
 	socket.timeout(5000).emit('host-lobby', (err, response) => {
@@ -24,15 +27,16 @@ function hostLobby(response) {
 	document.getElementById('lobbyCode').innerHTML = localHostedLobby.name;
 	console.log(`Lobby hosted successfully: ${localHostedLobby.name}`);
 	lobbyElement.style.display = 'block';
-	updateLobby();
+	getLobbyUpdatesFromServer();
+	setInterval(sendUpdatesToServer, sendInterval);
 }
-function updateLobby() {
-	socket.on('update-players', (players) => {
-		localHostedLobby.players = players;
-		updateTable();
+function getLobbyUpdatesFromServer() {
+	socket.on('update-lobby', (lobby) => {
+		localHostedLobby = lobby;
+		updatePlayersUI();
 	});
 }
-function updateTable() {
+function updatePlayersUI() {
 	const tableElement = document.getElementById('playersTableBody');
 	let table = '';
 	let i = 1;
@@ -44,4 +48,20 @@ function updateTable() {
 		i++;
 	}
 	tableElement.innerHTML = table;
+}
+
+
+function sendUpdatesToServer() {
+	sendLobbySettingsToServer();
+}
+
+function sendLobbySettingsToServer() {
+	const lobbySettings = getLobbySettingsFromUI();
+	socket.emit('update-lobby-settings', lobbySettings);
+}
+
+function getLobbySettingsFromUI(){
+	let settings = {};
+	settings.impostorCount = document.getElementById('impostor-count-input').value;
+	return settings;
 }

@@ -29,7 +29,7 @@
 								class="form-control bg-body-glass"
 								id="nameInput"
 								placeholder="Namn"
-								onkeyup="localStorage.setItem('player-name', this.value)"
+								onChange="localStorage.setItem('player-name', this.value)"
 							/>
 							<label for="nameInput">Namn</label>
 						</div>
@@ -47,9 +47,7 @@
 								placeholder="Rumskod"
 							/>
 							<script>
-								document.addEventListener('DOMContentLoaded', function () {
-									document.getElementById('nameInput').value = localStorage.getItem('player-name');
-								});
+								document.getElementById('nameInput').value = localStorage.getItem('player-name');
 							</script>
 							<label for="lobbyCodeInput">Rumskod</label>
 						</div>

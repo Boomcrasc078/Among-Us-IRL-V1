@@ -2,9 +2,7 @@ const socket = io();
 
 socket.on('disconnect', (reason) => onDisconnection(reason));
 
-socket.on();
-
-let localPlayer = { socketId: socket.id, name: null, id: null };
+let localPlayer = { socketId: socket.id, name: null};
 
 let localJoinedLobby = { name: null, players: [] };
 
@@ -49,18 +47,15 @@ function joinLobby() {
 
 	getPlayerName();
 
-	socket.setda;
-
-	socket.timeout(5000).emit('join-lobby', localJoinedLobby.name, localPlayer, (err, response) => {
+	socket.timeout(5000).emit('join-lobby', localJoinedLobby.name, localPlayer, (error, response) => {
 		loadingScreen(false);
-		if (err) {
-			console.log(`Error joining lobby: ${err}`);
-			error(true, err);
+		if (error) {
+			console.log(`Error joining lobby: ${error}`);
+			error(true, error);
 		} else if (response.status) {
 			console.log(`Joined lobby successfully: ${response.lobbyName}`);
-			localStorage.setItem('last-joined-lobby', localJoinedLobby.name);
 			lobby(true);
-			updateLobby();
+			getLobbyUpdatesFromServer();
 		} else {
 			console.log(`Failed to join lobby: ${response.message}`);
 			error(true, response.message);
@@ -87,7 +82,7 @@ function lobby(enabled) {
 	}
 }
 
-function updateLobby() {
+function getLobbyUpdatesFromServer() {
 	socket.on('update-lobby', (lobby) => {
 		localJoinedLobby = lobby;
 	});
